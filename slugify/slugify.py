@@ -43,13 +43,14 @@ def smart_truncate(
 
     string = string.strip(separator)
 
-    if not max_length:
+    # Match slugify(): non-positive max_length means no truncation.
+    if max_length <= 0:
         return string
 
     if len(string) < max_length:
         return string
 
-    if not word_boundary:
+    if not word_boundary or not separator:
         return string[:max_length].strip(separator)
 
     if separator not in string:
